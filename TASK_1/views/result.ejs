@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* AliceBlue */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .result {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4682b4; /* SteelBlue */
+        }
+
+        p {
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #4682b4;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        a:hover {
+            background: #4169e1; /* RoyalBlue */
+        }
+    </style>
+</head>
+<body>
+    <div class="result">
+        <h1>Form Submitted Successfully!</h1>
+        <p>Name: <%=name %></p>
+        <p>Email: <%= email %></p>
+        <a href="/">Back to Form</a>
+    </div>
+</body>
+</html>
