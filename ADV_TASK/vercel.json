@@ -1,0 +1,4 @@
+{
+    "version": 2,
+    "rewrites":[{"source":"/(.*)","destination":"/cognify_intern/TASK_1"}]
+}

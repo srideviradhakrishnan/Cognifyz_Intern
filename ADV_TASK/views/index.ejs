@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            background: url('/TASK_1/Software.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            position: relative; /* Ensure body is positioned relatively */
+        }
+        .header {
+            color: white;
+            padding: 10px;
+            text-align: right;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 60px auto 20px; /* Add space below header for content */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-title {
+            text-align: center;
+        }
+        .form-wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Set a style for all buttons */
+        button.login-button {
+            background-color:#4CAF50;
+            color: white;
+            font-size: 16px;
+            padding: 12px 20px;
+            margin: 595px 810px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: auto;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        button.login-button:hover {
+            opacity: 0.8;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 90%; /* Could be more or less, depending on screen size */
+            max-width: 500px;
+            max-height: 800px; /* Limit maximum width */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 0;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .form {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+        }
+
+        /* Add Zoom Animation */
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+        .animate {
+            animation: animatezoom 0.6s;
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+
+        .password-constraints {
+            font-size: 14px;
+            margin-top: 5px;
+            color: #666;
+            display: none; /* Initially hidden */
+        }
+        .password-constraints li {
+            margin-bottom: 5px;
+        }
+        .green {
+            color: green;
+        }
+        .red {
+            color: red;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const rollno = document.getElementById('rollno').value;
+            const gender = document.getElementById('gender').value;
+            const password = document.getElementById('password').value;
+
+            if (name === '' || email === '' || rollno === '' || gender === '' || password === '') {
+                alert('All fields are required.');
+                return false;
+            }
+            if (!isStrongPassword(password)) {
+                alert('Password should be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+                return false;
+            }
+            return true;
+        }
+
+        function isStrongPassword(password) {
+            // Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character
+            const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return strongPasswordRegex.test(password);
+        }
+
+        function showPasswordConstraints() {
+            const password = document.getElementById('password').value;
+            const constraintsList = document.getElementById('password-constraints');
+
+            // Check password strength criteria
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasDigit = /\d/.test(password);
+            const hasSpecialChar = /[@$!%*?&]/.test(password);
+
+            // Update password strength constraints
+            constraintsList.innerHTML = '';
+            if (password.length >= 8) {
+                constraintsList.innerHTML += '<li class="green">Must be at least 8 characters long</li>';
+            } else {
+                constraintsList.innerHTML += '<li class="red">Must be at least 8 characters long</li>';
+            }
+            if (hasUpperCase) {
+                constraintsList.innerHTML += '<li class="green">Must contain at least one uppercase letter (A-Z)</li>';
+            } else {
+                constraintsList.innerHTML += '<li class="red">Must contain at least one uppercase letter (A-Z)</li>';
+            }
+            if (hasLowerCase) {
+                constraintsList.innerHTML += '<li class="green">Must contain at least one lowercase letter (a-z)</li>';
+            } else {
+                constraintsList.innerHTML += '<li class="red">Must contain at least one lowercase letter (a-z)</li>';
+            }
+            if (hasDigit) {
+                constraintsList.innerHTML += '<li class="green">Must contain at least one number (0-9)</li>';
+            } else {
+                constraintsList.innerHTML += '<li class="red">Must contain at least one number (0-9)</li>';
+            }
+            if (hasSpecialChar) {
+                constraintsList.innerHTML += '<li class="green">Must contain at least one special character (@$!%*?&)</li>';
+            } else {
+                constraintsList.innerHTML += '<li class="red">Must contain at least one special character (@$!%*?&)</li>';
+            }
+
+            // Show password constraints
+            constraintsList.style.display = 'block';
+        }
+
+        function hidePasswordConstraints() {
+            const constraintsList = document.getElementById('password-constraints');
+            constraintsList.style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+   
+
+    <div id="id01" class="modal">
+        <form class="modal-content animate" action="/action_page.php" method="post">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+               
+            </div>
+
+            <div class="container">
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+
+                <button type="submit">Login</button>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"></button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h1 class="form-title">User Registration</h1>
+        <form id="registrationForm" action="/submit" method="post" onsubmit="return validateForm()" class="form-wrapper">
+            <label for="name" style="display: block; font-weight: bold; margin-bottom: 5px;">Name:</label><br>
+            <input type="text" id="name" name="name" class="form-input" required><br>
+
+            <label for="email" style="display: block; font-weight: bold; margin-bottom: 5px;">Email:</label><br>
+            <input type="email" id="email" name="email" class="form-input" required><br>
+
+            <label for="rollno" style="display: block; font-weight: bold; margin-bottom: 5px;">Roll Number:</label><br>
+            <input type="text" id="rollno" name="rollno" class="form-input" required><br>
+
+            <label for="gender" style="display: block; font-weight: bold; margin-bottom: 5px;">Gender:</label><br>
+            <select id="gender" name="gender" class="form-input">
+                <option value="">Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <label for="password" style="display: block; font-weight: bold; margin-bottom: 5px;">Password:</label><br>
+            <input type="password" id="password" name="password" class="form-input" oninput="showPasswordConstraints()" onfocus="showPasswordConstraints()" onblur="hidePasswordConstraints()" required><br>
+            <ul id="password-constraints" class="password-constraints">
+                <li class="green">Must be at least 8 characters long</li>
+                <li class="green">Must contain at least one uppercase letter (A-Z)</li>
+                <li class="green">Must contain at least one lowercase letter (a-z)</li>
+                <li class="green">Must contain at least one number (0-9)</li>
+                <li class="green">Must contain at least one special character (@$!%*?&)</li>
+            </ul><br>
+
+            <button type="submit" class="form-button">Submit</button>
+            
+                <button class="form-button" onclick="document.getElementById('id01').style.display='block'">Login</button>
+        
+        </form>
+    </div>
+</body>
+</html>
